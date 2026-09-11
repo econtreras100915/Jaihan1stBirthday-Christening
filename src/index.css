@@ -1,0 +1,854 @@
+@import url('https://fonts.googleapis.com/css2?family=Allura&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+/**
+ * =============================================================================
+ *  GLOBAL STYLES — design tokens, resets, shared utilities & animations
+ * =============================================================================
+ *  This file is the single source of truth for the visual language of the
+ *  invitation: the "Boss Baby up in the clouds" palette (deep teal + gold +
+ *  cream, with a dusty-rose accent used sparingly), the type system (a bold
+ *  rounded display face for the celebrant's name, a flowing script for
+ *  storybook flourishes, and a soft body font), and every reusable
+ *  animation/utility class the components lean on.
+ *
+ *  NOTE: the --navy-* and --blue-500 token *names* are kept as-is on purpose
+ *  (dozens of components reference them via var(--navy-950) etc.) — only
+ *  their *values* were repainted from boardroom-navy to sky-teal, so this
+ *  single edit reskins the whole site.
+ *
+ *  Sections in this file:
+ *    1. Design tokens (:root variables)
+ *    2. Reset & base element styles
+ *    3. Typography helpers
+ *    4. Buttons & badges
+ *    5. Section layout helpers (wave dividers, floating decor)
+ *    6. Keyframe animations
+ *    7. Scrollbar + misc polish
+ *    8. Responsive tweaks
+ * =============================================================================
+ */
+
+/* ---------------------------------------------------------------------------
+   1. DESIGN TOKENS
+--------------------------------------------------------------------------- */
+:root {
+  /* Core palette — up in the clouds: deep teal script + gold crown + cream */
+  --navy-950: #0c3733;
+  --navy-900: #124d46;
+  --navy-800: #1a655c;
+  --navy-700: #227d71;
+  --blue-500: #5fb1c7;
+  --gold-300: #ffe49a;
+  --gold-400: #f7cf5c;
+  --gold-500: #eab223;
+  --cream-50: #fffaef;
+  --cream-100: #fdf2d8;
+  --tie-red: #e0748c;
+  --ink: #123f3b;
+  --ink-soft: #4f6d6a;
+  --white: #ffffff;
+
+  --grad-navy: linear-gradient(160deg, var(--navy-950) 0%, var(--navy-800) 55%, var(--blue-500) 130%);
+  --grad-gold: linear-gradient(135deg, var(--gold-300), var(--gold-500));
+  --grad-teal: linear-gradient(135deg, var(--navy-800), var(--navy-900));
+
+  --font-display: "Baloo 2", "Fredoka", system-ui, sans-serif;
+  --font-body: "Quicksand", "Nunito", system-ui, sans-serif;
+  --font-fun: "Luckiest Guy", "Baloo 2", cursive;
+  --font-accent: "Fredoka", "Baloo 2", system-ui, sans-serif;
+  --font-script: "Caveat", "Segoe Script", cursive;
+  --font-serif: "Cormorant Garamond", "Georgia", serif;
+
+  --max-width: 720px;
+  --section-pad: clamp(64px, 11vw, 108px);
+
+  --shadow-soft: 0 20px 50px rgba(12, 55, 51, 0.16);
+  --shadow-gold: 0 14px 34px rgba(234, 178, 35, 0.35);
+  --shadow-teal: 0 14px 34px rgba(18, 77, 70, 0.28);
+}
+
+/* ---------------------------------------------------------------------------
+   2. RESET & BASE ELEMENT STYLES
+--------------------------------------------------------------------------- */
+* { box-sizing: border-box; min-width: 0; }
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  max-width: 100vw;
+  background: var(--cream-50);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+button { font: inherit; cursor: pointer; }
+a { color: inherit; }
+
+::selection { background: var(--gold-400); color: var(--navy-950); }
+::-moz-selection { background: var(--gold-400); color: var(--navy-950); }
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--gold-500);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------------------------------------------------------------------------
+   3. TYPOGRAPHY
+--------------------------------------------------------------------------- */
+.font-display { font-family: var(--font-display); }
+.font-fun { font-family: var(--font-fun); }
+.font-script { font-family: var(--font-script); }
+
+/* Small flowing script kicker — "Join us for", "We are", "Our" — echoing
+   the handwritten teal script used above the celebrant's name in the
+   cloud-themed invitation art. Sits on a dark (section-navy) background by
+   default; .section-cream / .section-gold-tint flip it to deep teal below. */
+.eyebrow-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-script);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: var(--gold-300);
+}
+.section-cream .eyebrow-note,
+.section-gold-tint .eyebrow-note {
+  color: var(--navy-800);
+}
+.eyebrow-note svg { width: 16px; height: 16px; }
+
+/* Big rounded-bold title — used for the celebrant's name on the landing
+   cover and hero section. Baloo 2 at its heaviest weight gives the same
+   chunky, storybook-crown lettering as the reference "JAIHANN" logotype. */
+.heading-xl {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.005em;
+  font-size: clamp(3rem, 12.5vw, 5.1rem);
+  margin: 0;
+}
+
+.heading-lg {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.005em;
+  font-size: clamp(2.2rem, 6.5vw, 3.2rem);
+  margin: 0;
+}
+
+.body-copy {
+  font-size: 17.5px;
+  line-height: 1.85;
+  color: var(--ink-soft);
+  max-width: 46ch;
+  margin: 0 auto;
+}
+
+/* Dark (navy) sections need a lighter body-copy color — otherwise the
+   default ink-soft (a muted navy-grey) nearly disappears against the
+   navy background. */
+.section-navy .body-copy { color: rgba(255, 255, 255, 0.82); }
+
+/* ---------------------------------------------------------------------------
+   4. BUTTONS & BADGES
+--------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 30px;
+  border-radius: 999px;
+  border: none;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+}
+.btn:active { transform: scale(0.96); }
+
+.btn-gold {
+  background: var(--grad-gold);
+  color: var(--navy-950);
+  box-shadow: var(--shadow-gold);
+}
+.btn-gold:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(234, 178, 35, 0.48); }
+
+.btn-outline {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--white);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.btn-outline:hover { border-color: var(--gold-400); color: var(--gold-300); transform: translateY(-3px); }
+
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  background: rgba(247, 207, 92, 0.14);
+  border: 1px solid rgba(247, 207, 92, 0.4);
+  color: var(--gold-300);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ---------------------------------------------------------------------------
+   5. SECTION LAYOUT HELPERS
+--------------------------------------------------------------------------- */
+.section {
+  position: relative;
+  padding: var(--section-pad) 24px;
+}
+
+.section-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.section-navy { background: var(--grad-navy); color: var(--white); }
+
+/* Soft drifting-cloud texture (pure CSS radial gradients, no image assets)
+   layered under every light section so the whole page reads as "up in the
+   clouds" the way every banner in the reference art does, not just the
+   sections that mount an explicit <CloudRow />. */
+.section-cream {
+  background:
+    radial-gradient(ellipse 220px 90px at 8% 12%, rgba(255,255,255,0.9), transparent 70%),
+    radial-gradient(ellipse 260px 110px at 92% 82%, rgba(255,255,255,0.85), transparent 70%),
+    var(--cream-50);
+  color: var(--ink);
+}
+.section-gold-tint {
+  background:
+    radial-gradient(ellipse 240px 100px at 90% 10%, rgba(255,255,255,0.75), transparent 70%),
+    radial-gradient(ellipse 200px 90px at 6% 88%, rgba(255,255,255,0.7), transparent 70%),
+    var(--cream-100);
+  color: var(--ink);
+}
+
+/* Soft scalloped/wave divider placed at the top of a section to avoid hard
+   rectangular seams between color bands — a recurring "keepsake book" motif. */
+.wave-divider {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  line-height: 0;
+  transform: translateY(-99%);
+  z-index: 2;
+}
+.wave-divider svg { width: 100%; height: auto; display: block; }
+
+/* Floating decorative layer: absolutely positioned, ignored by hit-testing,
+   holds bobbing icons/confetti dots behind section content. */
+.floating-decor {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.floating-decor .deco-item {
+  position: absolute;
+  opacity: 0.85;
+  animation: bob 6s ease-in-out infinite;
+}
+
+/* Puffy "invitation card" bubble-text treatment for the celebrant's name —
+   deep teal gradient fill with a soft cream outline, matching the teal
+   storybook lettering in the cloud-themed reference art. Layer on top of
+   .heading-xl. On dark (section-navy) backgrounds the outline flips to gold
+   so the letters still pop off the teal gradient behind them. */
+.heading-bubble {
+  background: var(--grad-teal);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--navy-800);
+  -webkit-text-stroke: 1.5px var(--cream-50);
+  paint-order: stroke fill;
+  text-shadow: 0 5px 0 rgba(234, 178, 35, 0.45);
+}
+.section-navy .heading-bubble {
+  -webkit-text-stroke: 1.5px var(--gold-300);
+  text-shadow: 0 5px 0 rgba(12, 55, 51, 0.55);
+}
+
+/* Folded-ribbon banner used to frame the event date/subtitle, echoing the
+   teal ribbon banner under the celebrant's name in the reference art
+   ("1ST BIRTHDAY & CHRISTENING"). Deep teal fill, cream lettering, with a
+   thin gold pinstripe top/bottom for a touch of crown-gold trim. */
+.ribbon-banner {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 26px;
+  background: var(--grad-teal);
+  color: var(--cream-50);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14.5px;
+  letter-spacing: 0.02em;
+  border-radius: 5px;
+  border-top: 2px solid var(--gold-400);
+  border-bottom: 2px solid var(--gold-400);
+  box-shadow: var(--shadow-teal);
+}
+.ribbon-banner::before,
+.ribbon-banner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+}
+.ribbon-banner::before {
+  left: -13px;
+  border-right: 13px solid var(--navy-900);
+}
+.ribbon-banner::after {
+  right: -13px;
+  border-left: 13px solid var(--navy-900);
+}
+
+.divider-dot-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 8px 0;
+}
+.divider-dot-row span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold-400);
+}
+.divider-dot-row span:nth-child(2) { width: 9px; height: 9px; }
+
+/* ---------------------------------------------------------------------------
+   6. KEYFRAME ANIMATIONS
+--------------------------------------------------------------------------- */
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-18px) rotate(6deg); }
+}
+@keyframes bobSlow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(-4deg); }
+}
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(247, 207, 92, 0.45); }
+  50% { box-shadow: 0 0 0 14px rgba(247, 207, 92, 0); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* A cheerful side-to-side + up-down wiggle, like the little boss is
+   shaking with excitement. Used on badges, icons, and buttons for a
+   playful, kid-friendly hover/idle effect. */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-3deg) scale(1); }
+  25% { transform: rotate(3deg) scale(1.03); }
+  50% { transform: rotate(-2deg) scale(1); }
+  75% { transform: rotate(2deg) scale(1.03); }
+}
+
+/* Balloons/stars drifting upward and swaying, like party decor caught
+   in a breeze. */
+@keyframes floatUp {
+  0% { transform: translateY(10vh) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.9; }
+  50% { transform: translateY(-45vh) translateX(14px) rotate(8deg); }
+  90% { opacity: 0.9; }
+  100% { transform: translateY(-100vh) translateX(-10px) rotate(-6deg); opacity: 0; }
+}
+
+/* The "flying baby boss" trail: a swoop from bottom-left to top-right,
+   banking like a tiny jetpack-powered CEO cruising across the sky. */
+@keyframes flyAcross {
+  0% { transform: translate(-10vw, 30vh) rotate(-8deg) scale(0.7); opacity: 0; }
+  12% { opacity: 1; }
+  50% { transform: translate(45vw, -8vh) rotate(6deg) scale(1); }
+  88% { opacity: 1; }
+  100% { transform: translate(110vw, -35vh) rotate(14deg) scale(0.85); opacity: 0; }
+}
+
+/* A second, separate "flying" motif — the baby boss riding his smiling
+   cloud — added as extra site-wide background atmosphere. Slower and
+   gentler than flyAcross (drifting, not swooping), so the two never read
+   as the same sprite or compete for attention. Left-to-right only, with a
+   soft up/down bob, like the cloud itself is doing the carrying. */
+@keyframes driftAcross {
+  0% { transform: translate(-15vw, 6vh) rotate(-3deg) scale(0.8); opacity: 0; }
+  10% { opacity: 0.95; }
+  50% { transform: translate(45vw, -4vh) rotate(2deg) scale(0.95); }
+  90% { opacity: 0.95; }
+  100% { transform: translate(115vw, 8vh) rotate(-2deg) scale(0.85); opacity: 0; }
+}
+.cloud-rider {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+  animation: driftAcross linear infinite;
+}
+
+/* Gentle superhero-style hover for the portrait itself: gliding side to
+   side with a light bank, rather than a straight up/down bob. */
+@keyframes flyHover {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-14px) rotate(2deg); }
+}
+
+@keyframes sparklePop {
+  0% { transform: scale(0) rotate(0deg); opacity: 0; }
+  40% { transform: scale(1.2) rotate(20deg); opacity: 1; }
+  100% { transform: scale(0.9) rotate(40deg); opacity: 0; }
+}
+
+.pulse-glow { animation: pulseGlow 2.6s ease-in-out infinite; }
+.spin-slow { animation: spinSlow 14s linear infinite; }
+.twinkle { animation: twinkle 3s ease-in-out infinite; }
+.wiggle-hover:hover { animation: wiggle 0.6s ease-in-out; }
+.fly-hover { animation: flyHover 4.5s ease-in-out infinite; }
+.balloon-item {
+  position: absolute;
+  bottom: -10vh;
+  animation: floatUp linear infinite;
+  pointer-events: none;
+}
+.flying-boss {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  display: block;
+  animation: flyAcross linear infinite;
+}
+
+/* A soft, angled streak trailing behind the flying boss baby, giving a
+   "moving fast" sense without needing a sprite animation. */
+@keyframes streakFade {
+  0%, 100% { opacity: 0; }
+  15%, 85% { opacity: 0.55; }
+}
+.boss-trail-streak {
+  position: absolute;
+  right: 62%;
+  top: 46%;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255, 214, 122, 0.75));
+  transform: rotate(-18deg);
+  transform-origin: right center;
+  animation: streakFade linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   7. SCROLLBAR + MISC POLISH
+--------------------------------------------------------------------------- */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--cream-50); }
+::-webkit-scrollbar-thumb { background: var(--gold-400); border-radius: 999px; }
+
+.scroll-progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 4px;
+  background: var(--grad-gold);
+  z-index: 200;
+  transition: width 0.1s linear;
+}
+
+/* ---------------------------------------------------------------------------
+   8. RESPONSIVE TWEAKS
+--------------------------------------------------------------------------- */
+@media (max-width: 700px) {
+  :root { --section-pad: 56px; }
+  .btn { padding: 14px 24px; font-size: 14px; }
+  .detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+  .detail-grid > * {
+    min-height: 250px;
+    padding: 18px 12px !important;
+    border-radius: 18px !important;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    text-align: center !important;
+  }
+  .detail-grid > * > div:first-child {
+    width: 38px !important;
+    height: 38px !important;
+    margin-bottom: 10px !important;
+  }
+  .detail-grid h3 { font-size: 14px !important; text-align: center !important; }
+  .detail-grid p { font-size: 10.5px !important; line-height: 1.5; text-align: center !important; }
+  .detail-grid .detail-card-venue { white-space: normal; }
+  .detail-grid .btn { margin-top: auto !important; padding: 8px 10px !important; font-size: 10px !important; }
+}
+
+/* Keep long venue names tidy in the single-column mobile event cards. */
+.detail-card-venue {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+/* The supplied Event Details artwork already contains two framed panels.
+   On larger screens, the live card content sits directly inside those panels. */
+@media (min-width: 701px) {
+  .event-details-section {
+    min-height: min(75vw, 1000px);
+  }
+  .event-details-section .section-inner > div:first-child {
+    display: none;
+  }
+  .event-details-section .detail-grid {
+    gap: 3.4% !important;
+  }
+  .event-details-section .detail-card {
+    min-height: 390px;
+    padding: 145px 46px 54px !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-align: center !important;
+  }
+  .event-details-section .detail-card > div:first-child {
+    display: none !important;
+  }
+  .event-details-section .detail-card h3 {
+    font-size: 21px !important;
+  }
+  .event-details-section .detail-card p {
+    font-size: 15px !important;
+    text-align: center !important;
+  }
+  .event-details-section .detail-card-venue {
+    white-space: normal;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   LUXURY SKY BLUE REDESIGN
+--------------------------------------------------------------------------- */
+:root {
+  --primary: #7DB7FF;
+  --gold: #D4AF37;
+  --cream: #F6F3EC;
+  --ink: #2D3748;
+  --ink-soft: #687386;
+  --white: #fff;
+  --cream-50: #fbfcff;
+  --cream-100: #F6F3EC;
+  --blue-500: #7DB7FF;
+  --gold-300: #f4dc92;
+  --gold-400: #D4AF37;
+  --gold-500: #b78d1e;
+  --navy-950: #2D3748;
+  --navy-900: #40506a;
+  --navy-800: #58769c;
+  --navy-700: #6b91bd;
+  --sky-gradient: radial-gradient(circle at 10% 20%, rgba(255,255,255,.98) 0 8%, transparent 24%), linear-gradient(165deg, #fff 0%, #eaf5ff 47%, #bcdcff 100%);
+  --grad-navy: var(--sky-gradient);
+  --grad-teal: linear-gradient(135deg, #5d9be2, #92c7ff);
+  --grad-gold: linear-gradient(135deg, #efd27a, #c69b2d);
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Poppins", system-ui, sans-serif;
+  --font-accent: "Poppins", system-ui, sans-serif;
+  --font-script: "Allura", cursive;
+  --max-width: 1100px;
+  --section-pad: 80px;
+  --shadow-soft: 0 18px 45px rgba(85, 122, 167, .15);
+  --shadow-gold: 0 12px 26px rgba(212, 175, 55, .25);
+}
+
+body { background: #fbfcff; color: var(--ink); font-size: 15px; }
+.section { padding: var(--section-pad) 24px; overflow: hidden; }
+.section-cream, .section-gold-tint { background: var(--sky-gradient); }
+.section-gold-tint { background: linear-gradient(180deg, #f8fbff, #f6f3ec); }
+.section-navy { color: var(--ink); background: var(--sky-gradient); }
+.heading-xl, .heading-lg { font-family: var(--font-display); letter-spacing: -.035em; }
+.heading-lg { font-size: clamp(2.35rem, 5vw, 3.6rem); }
+.body-copy { color: var(--ink-soft); font-size: 15px; }
+.eyebrow-note { color: var(--gold-500); font-family: var(--font-body); font-weight: 600; font-size: 11px; letter-spacing: .17em; text-transform: uppercase; }
+.btn { font-family: var(--font-body); font-weight: 600; padding: 14px 25px; }
+.btn-gold { color: #fff; background: var(--grad-gold); box-shadow: var(--shadow-gold); }
+.badge-pill { color: var(--gold-500); background: rgba(255,255,255,.55); border-color: rgba(212,175,55,.4); }
+
+.hero-section { min-height: 100dvh; background: var(--sky-gradient); position: relative; }
+.section-navy#home { background: linear-gradient(160deg, #0c3733 0%, #1a655c 55%, #5fb1c7 130%); color: #fff; }
+.section-navy#home .heading-bubble { -webkit-text-stroke: 1.5px #f4dc92; text-shadow: 0 5px 0 rgba(12,55,51,.55); }
+.section-navy#home .hero-name {
+  background: none;
+  -webkit-text-fill-color: #fffaf0;
+  color: #fffaf0;
+  -webkit-text-stroke: 1px #0c3733;
+  paint-order: stroke fill;
+  text-shadow: 0 3px 0 rgba(12,55,51,.72), 0 0 14px rgba(12,55,51,.52);
+}
+.hero-section .section-inner { z-index: 2; }
+.hero-script { color: var(--gold-500); font-family: var(--font-script); font-size: clamp(3rem, 9vw, 5rem); line-height: .8; margin: 0; }
+.landing-name { margin: 8px 0 0; font-family: var(--font-display); font-size: clamp(3.25rem, 10vw, 6.2rem); line-height: .95; color: var(--ink); letter-spacing: -.06em; }
+.landing-subtitle { margin: 18px 0; color: var(--ink-soft); font-weight: 500; letter-spacing: .025em; }
+.invite-badge, .date-chip { display: inline-flex; align-items: center; gap: 7px; border: 1px solid rgba(212,175,55,.55); background: rgba(255,255,255,.62); color: var(--gold-500); border-radius: 999px; padding: 9px 16px; font-size: 11px; letter-spacing: .14em; font-weight: 700; }
+.date-chip { color: var(--ink); letter-spacing: .05em; }
+.tiny-ceo-scene { width: 260px; height: 190px; position: relative; margin: 18px auto 12px; animation: bobSlow 5s ease-in-out infinite; }
+.hero-ceo-scene { width: 310px; height: 225px; margin: 16px auto 14px; }
+.hero-cloud { position: absolute; left: 8%; right: 8%; bottom: 8px; height: 58px; border-radius: 50%; background: #fff; box-shadow: 0 12px 28px rgba(91,137,187,.2); }
+.hero-cloud::before, .hero-cloud::after { content:""; position:absolute; background:#fff; border-radius:50%; bottom:16px; }
+.hero-cloud::before { width: 88px; height: 88px; left: 36px; }.hero-cloud::after { width: 110px; height: 110px; right: 31px; }
+.tiny-ceo { position: absolute; z-index: 1; width: 105px; height: 132px; background: #6984aa; border-radius: 48px 48px 22px 22px; left: calc(50% - 52px); bottom: 44px; box-shadow: inset 0 -12px 0 #587496, 0 8px 16px rgba(37,54,79,.2); }
+.tiny-ceo::before { content:""; position:absolute; width:76px; height:76px; left:15px; top:-50px; border-radius:50%; background:#f5d4ba; box-shadow:inset 0 -6px 0 #e9b995; }
+.tiny-ceo i { position:absolute; z-index:2; left:32px; top:-26px; width:40px; height:9px; border-radius:50%; border-bottom:3px solid #2D3748; }
+.tiny-ceo b { position:absolute; z-index:2; border-left:11px solid transparent; border-right:11px solid transparent; border-top:25px solid #fff; top:8px; left:41px; }.tiny-ceo em { position:absolute; z-index:3; height:28px; width:7px; background:var(--gold); top:9px; left:49px; }
+.paper-plane { position:absolute; right:0; top:16px; color:var(--gold); font-size:30px; transform:rotate(20deg); }.cloud { position:absolute; width:230px; height:70px; background:rgba(255,255,255,.76); border-radius:99px; filter:blur(.2px); }.cloud::before,.cloud::after { content:""; position:absolute; background:inherit; border-radius:50%; bottom:24px; }.cloud::before{width:90px;height:90px;left:42px}.cloud::after{width:110px;height:110px;right:25px}.cloud-a{left:-70px;top:18%}.cloud-b{right:-70px;bottom:12%;transform:scale(.75)}
+.balloon { position:absolute; width:36px;height:48px;border-radius:50% 50% 46% 46%;background:rgba(212,175,55,.72); }.balloon::after{content:"";position:absolute;width:1px;height:70px;top:46px;left:18px;background:rgba(85,105,130,.35)}.balloon-a{right:13%;top:16%}.balloon-b{left:14%;bottom:18%;background:rgba(125,183,255,.7);transform:scale(.7)}
+
+.event-details-section { min-height: 0 !important; }.event-details-section .section-inner > div:first-child { display:block !important; }.event-glass-card { padding: 32px 36px; border-radius: 24px; background: rgba(255,255,255,.55); border: 1px solid rgba(255,255,255,.92); box-shadow: var(--shadow-soft); backdrop-filter: blur(16px); }.event-date-row { display:flex; justify-content:center; align-items:center; gap:9px; color:var(--gold-500); font-weight:600; margin-bottom:24px; }.event-details-section .detail-grid { gap: 16px !important; }.event-details-section .detail-card { min-height: 0 !important; padding: 22px !important; border-radius: 18px !important; background: rgba(255,255,255,.8) !important; border: 1px solid rgba(125,183,255,.16) !important; box-shadow:none !important; text-align:left !important; }.event-details-section .detail-card > div:first-child { display:grid !important; }.event-details-section .detail-card h3 { font-size:18px !important; }.event-details-section .detail-card p { text-align:left !important; font-size:14px !important; }
+
+.gift-luxury-card { position:relative; overflow:hidden; padding: 38px 80px 38px 36px; max-width: 670px; margin:0 auto; border-radius:24px; text-align:left; background:rgba(255,255,255,.7); border:1px solid rgba(255,255,255,.95); box-shadow:var(--shadow-soft); backdrop-filter:blur(14px); }.gift-luxury-card .body-copy { margin:0; }.gift-luxury-card > div[style] { justify-content:flex-start !important; }.gift-teddy { position:absolute; right:18px; bottom:14px; font-size:56px; filter:drop-shadow(0 8px 7px rgba(70,75,85,.18)); }
+
+.gallery-grid { grid-template-columns:repeat(4, minmax(0,1fr)); gap:16px; }.gallery-tile { cursor: zoom-in; min-height:180px; overflow:hidden; border-radius:20px; box-shadow:var(--shadow-soft); border:3px solid rgba(255,255,255,.9); }.gallery-tile img { width:100%; height:100%; object-fit:cover; aspect-ratio: .85; }.gallery-tile-tall img { aspect-ratio:.7; }.lightbox { position:fixed; z-index:300; inset:0; display:grid; place-items:center; padding:24px; background:rgba(30,45,65,.72); backdrop-filter:blur(8px); }.lightbox img { max-width:min(90vw,850px); max-height:85vh; border-radius:20px; box-shadow:0 20px 70px rgba(0,0,0,.35); }.lightbox button { position:fixed; right:24px; top:24px; background:rgba(255,255,255,.92); border:0; border-radius:50%; width:44px; height:44px; color:var(--ink); display:grid; place-items:center; }
+.gallery-placeholder { width:100%; height:100%; min-height:180px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:var(--gold-500); background:linear-gradient(145deg, rgba(255,255,255,.98), rgba(215,236,255,.78)); }.gallery-placeholder span { font-family:var(--font-display); font-size:28px; }.lightbox-placeholder { width:min(90vw,650px); min-height:340px; border-radius:20px; background:#fff; }.lightbox-placeholder span { font-family:var(--font-body); font-size:15px; color:var(--ink-soft); }
+.family-placeholder { min-height:240px; display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center; color:var(--gold-500); background:linear-gradient(145deg, #fff, #e6f3ff); font-family:var(--font-body); font-size:14px; }
+.thank-you-card { max-width:540px; margin:0 auto; padding:42px 30px; border-radius:24px; background:rgba(255,255,255,.66); border:1px solid rgba(255,255,255,.96); box-shadow:var(--shadow-soft); color:var(--ink); }.thank-you-card h2{margin:12px 0 5px}.thank-you-card p{margin:0;color:var(--ink-soft)}
+
+.program-timeline { position:relative; display:grid; grid-template-columns:repeat(5,1fr); gap:16px; }.program-timeline::before { content:""; position:absolute; top:40px; left:10%; right:10%; border-top:2px dashed var(--gold); z-index:0; }.program-card { position:relative; z-index:1; padding:18px 14px; min-height:188px; border-radius:20px; text-align:center; background:rgba(255,255,255,.7); border:1px solid rgba(255,255,255,.9); box-shadow:0 10px 24px rgba(85,122,167,.1); }.program-icon { width:48px; height:48px; margin:0 auto 14px; display:grid; place-items:center; background:#fff; color:var(--gold-500); border:1px solid rgba(212,175,55,.3); border-radius:50%; }.program-icon svg{width:22px}.program-card h3{font-size:15px;margin:5px 0;color:var(--ink)}.program-card p{font-size:11px;line-height:1.5;margin:0;color:var(--ink-soft)}.program-card .program-time{font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--gold-500);text-transform:uppercase;}
+
+@media (max-width:700px) { :root { --section-pad:48px; } .event-glass-card{padding:24px 16px}.gift-luxury-card{padding:30px 72px 30px 24px}.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.gallery-tile{min-height:140px}.program-timeline{grid-template-columns:1fr;gap:12px}.program-timeline::before{top:10%;bottom:10%;left:38px;right:auto;border-top:0;border-left:2px dashed var(--gold)}.program-card{display:grid;grid-template-columns:48px 1fr;text-align:left;column-gap:14px;min-height:0;padding:16px}.program-icon{grid-row:span 3;margin:0}.program-card h3{font-size:16px}.event-details-section .detail-grid{grid-template-columns:1fr !important}.event-details-section .detail-card{align-items:flex-start !important;text-align:left !important;min-height:0 !important}.event-details-section .detail-card h3,.event-details-section .detail-card p{text-align:left !important}.tiny-ceo-scene{transform:scale(.88);margin:-2px auto}.hero-section{padding-top:70px!important}.landing-name{font-size:3.45rem} }
+
+/* Original invitation theme restored. */
+:root { --navy-950:#0c3733; --navy-900:#124d46; --navy-800:#1a655c; --navy-700:#227d71; --blue-500:#5fb1c7; --gold-300:#ffe49a; --gold-400:#f7cf5c; --gold-500:#eab223; --cream-50:#fffaef; --cream-100:#fdf2d8; --tie-red:#e0748c; --ink:#123f3b; --ink-soft:#4f6d6a; --grad-navy:linear-gradient(160deg,var(--navy-950) 0%,var(--navy-800) 55%,var(--blue-500) 130%); --grad-gold:linear-gradient(135deg,var(--gold-300),var(--gold-500)); --grad-teal:linear-gradient(135deg,var(--navy-800),var(--navy-900)); --font-display:"Baloo 2","Fredoka",system-ui,sans-serif; --font-body:"Quicksand","Nunito",system-ui,sans-serif; --font-accent:"Fredoka","Baloo 2",system-ui,sans-serif; --font-script:"Caveat","Segoe Script",cursive; --max-width:720px; --section-pad:clamp(64px,11vw,108px); --shadow-soft:0 20px 50px rgba(12,55,51,.16); --shadow-gold:0 14px 34px rgba(234,178,35,.35); }
+body { background:var(--cream-50); color:var(--ink); font-family:var(--font-body); font-size:17px; }.section{padding:var(--section-pad) 24px}.section-cream{background:var(--cream-50);}.section-gold-tint{background:var(--cream-100)}.section-navy{background:var(--grad-navy);color:var(--white)}.heading-xl,.heading-lg{font-family:var(--font-display);}.heading-lg{font-size:clamp(2.2rem,6.5vw,3.2rem)}.body-copy{font-size:17.5px;color:var(--ink-soft)}.btn{font-family:var(--font-display);padding:16px 30px}.btn-gold{color:var(--navy-950);background:var(--grad-gold)}.eyebrow-note{font-family:var(--font-script);font-size:26px;color:var(--gold-300);text-transform:none;letter-spacing:.01em}.gallery-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.event-glass-card{padding:0;border:0;background:transparent;box-shadow:none;backdrop-filter:none}.event-date-row{display:none}.event-details-section .detail-card{background:var(--white)!important;border:1px solid rgba(26,101,92,.06)!important;border-radius:22px!important;padding:28px 26px!important;box-shadow:var(--shadow-soft)!important}.event-details-section .detail-card h3,.event-details-section .detail-card p{text-align:left!important}.gift-luxury-card{padding:30px 28px;background:var(--white);border:1px dashed rgba(234,178,35,.5);border-radius:22px;box-shadow:var(--shadow-soft);max-width:460px;text-align:center}.gift-teddy{display:none}.section-navy#home{background:var(--grad-navy)}
+.gift-suggestions-row { align-items: flex-start; }
+@media (max-width: 700px) { .gift-suggestions-row { gap: 8px !important; } .gift-suggestions-row > div { width: calc((100% - 16px) / 3) !important; } .gift-suggestions-row p { font-size: 11px !important; } }
+
+/* Keep ceremony and reception together in one row, with centered details. */
+.event-details-section .detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+.event-details-section .detail-card { display: flex !important; flex-direction: column; align-items: center !important; text-align: center !important; }
+.event-details-section .detail-card > div:first-child { margin-left: auto; margin-right: auto; }
+.event-details-section .detail-card h3,
+.event-details-section .detail-card p { text-align: center !important; }
+.event-details-section .detail-card .btn { align-self: center; }
+@media (max-width: 700px) {
+  .event-details-section .detail-grid { gap: 10px !important; }
+  .event-details-section .detail-card { min-height: 245px !important; padding: 18px 10px !important; }
+  .event-details-section .detail-card h3 { font-size: 14px !important; }
+  .event-details-section .detail-card p { font-size: 10.5px !important; line-height: 1.45; }
+  .event-details-section .detail-card .btn { margin-top: auto !important; padding: 8px 11px !important; font-size: 10px !important; }
+}
+
+/* User-provided invitation frame: preserve its centered open area for gift copy. */
+.gift-frame-section {
+  min-height: 760px;
+  display: flex;
+  align-items: center;
+  background-color: #fff9ec;
+  background-image: url("./assets/backgrounds/gift-guide-frame.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto 100%;
+}
+.gift-frame-section .section-inner { width: 100%; }
+.gift-frame-section .gift-luxury-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(5px);
+}
+.gate-invite { margin: 0; color: var(--gold-300); font-family: var(--font-script); font-size: 30px; font-weight: 600; line-height: 1; }
+.gate-intro { margin: 8px 0 10px; color: rgba(255,255,255,.82); font-size: 13px; letter-spacing: .02em; }
+.gate-name { margin-top: 0 !important; font-size: clamp(2.7rem, 10.5vw, 4.35rem) !important; letter-spacing: .045em; background: none !important; color: #fff !important; -webkit-text-fill-color: #fff !important; -webkit-text-stroke: 0 !important; text-shadow: 0 3px 12px rgba(0, 0, 0, .24) !important; }
+.gate-celebration { color: var(--gold-300); font-family: var(--font-display); font-size: 15px; margin: 12px 0 0; }
+.gate-date { margin-top: 2px; }
+@media (max-width: 700px) {
+  .gift-frame-section { min-height: 670px; background-size: cover; background-position: center; }
+  .gift-frame-section .section-inner { transform: translateY(8px); }
+  .gift-frame-section .section-inner > div:first-child { margin-bottom: 12px !important; }
+  .gift-frame-section .eyebrow-note { margin: 0 !important; line-height: 1.1; }
+  .gift-frame-section .heading-lg { margin-top: 5px !important; }
+  .gift-frame-section .gift-luxury-card { scale: 0.86; transform-origin: center top; }
+  .gate-invite { font-size: 27px; }
+  .gate-intro { margin-bottom: 8px; }
+}
+
+/* ---------------------------------------------------------------------------
+   RESPONSIVE LAYOUT SAFEGUARDS
+   These final, component-scoped rules cover compact phones, tablets, and
+   large screens without changing the invitation's desktop composition.
+--------------------------------------------------------------------------- */
+.event-program-grid { width: min(100%, 460px); }
+.rsvp-form-frame { width: min(100%, 480px); }
+
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  .section { padding-inline: 16px; }
+  .section-inner { width: 100%; }
+  .heading-xl { font-size: clamp(2.45rem, 13vw, 3.35rem); }
+  .heading-lg { font-size: clamp(1.9rem, 9vw, 2.5rem); }
+  .body-copy { font-size: 16px; line-height: 1.75; }
+
+  .badge-pill { max-width: 100%; justify-content: center; padding: 8px 13px; font-size: 12px; }
+  .ribbon-banner { max-width: calc(100% - 28px); justify-content: center; padding: 8px 14px; font-size: 12.5px; text-align: center; }
+  .ribbon-banner::before, .ribbon-banner::after { display: none; }
+
+  .section-navy#home { min-height: 100svh !important; padding-top: 72px !important; padding-bottom: 58px !important; }
+  .hero-portrait { width: min(62vw, 218px) !important; margin: 20px auto 16px !important; }
+  .hero-celebration { font-size: 15px !important; }
+  .hero-date { line-height: 1.25; }
+
+  .gate-portrait { width: min(43vw, 158px) !important; margin: 14px auto !important; }
+  .gate-invite { font-size: clamp(23px, 7.5vw, 28px); }
+  .gate-intro { font-size: 12px; }
+  .gate-celebration { font-size: 14px; }
+
+  .event-details-section .detail-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+  .event-details-section .detail-card { min-height: 0 !important; padding: 20px !important; }
+  .event-details-section .detail-card h3 { font-size: 16px !important; }
+  .event-details-section .detail-card p { font-size: 13px !important; }
+  .event-details-section .detail-card .btn { margin-top: 14px !important; padding: 9px 14px !important; font-size: 12px !important; }
+
+  .event-program-grid { gap: 12px !important; }
+  .event-program-grid > * { padding: 20px 10px 16px !important; border-radius: 20px !important; }
+  .event-program-grid p { font-size: 13px !important; }
+
+  .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .gallery-grid > * { border-width: 2px !important; border-radius: 13px !important; }
+  .gift-frame-section { min-height: 620px; }
+  .gift-frame-section .gift-luxury-card { scale: 1; width: 100%; padding: 24px 16px; }
+  .gift-suggestions-row { gap: 4px !important; margin-top: 20px !important; padding-top: 18px !important; }
+  .gift-suggestions-row > div { width: calc((100% - 8px) / 3) !important; }
+  .gift-suggestions-row p { font-size: 10px !important; line-height: 1.3; }
+
+  .rsvp-form-frame { padding: 6px !important; border-radius: 18px !important; }
+  .rsvp-form-frame iframe { height: 820px !important; border-radius: 12px !important; }
+  .btn { max-width: 100%; padding: 13px 20px; font-size: 13px; text-align: center; }
+}
+
+@media (min-width: 481px) and (max-width: 700px) {
+  .section { padding-inline: 20px; }
+  .hero-portrait { width: 220px !important; }
+  .event-program-grid { max-width: 440px; }
+  .event-details-section .detail-card { min-height: 230px !important; }
+}
+
+@media (min-width: 701px) and (max-width: 1024px) {
+  :root { --max-width: 860px; }
+  .section { padding-inline: 32px; }
+  .event-program-grid { max-width: 560px !important; }
+  .gallery-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .gift-frame-section { min-height: 700px; }
+}
+
+@media (min-width: 1025px) {
+  :root { --max-width: 920px; }
+  .section { padding-inline: 40px; }
+  .event-program-grid { max-width: 600px !important; }
+}
+
+/* Gentle falling stars and confetti for a playful, kid-friendly atmosphere. */
+@keyframes fallKidsDecor {
+  0% { transform: translate3d(0, -12vh, 0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.65; }
+  100% { transform: translate3d(var(--fall-drift), 112vh, 0) rotate(300deg); opacity: 0; }
+}
+.falling-kids-decor {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  overflow: hidden;
+  pointer-events: none;
+}
+.falling-piece {
+  position: absolute;
+  top: 0;
+  display: grid;
+  place-items: center;
+  font-family: Arial, sans-serif;
+  font-size: inherit;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0;
+  filter: drop-shadow(0 2px 3px rgba(12, 55, 51, 0.22));
+  animation: fallKidsDecor linear infinite;
+  will-change: transform, opacity;
+}
+.falling-piece--star { background: transparent !important; }
+.falling-piece--confetti { border-radius: 2px; transform-origin: center; }
+.falling-piece--bubble {
+  border: 1.5px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.95) 0 10%, rgba(255,255,255,0.18) 30%, rgba(95,177,199,0.25) 100%) !important;
+}
+.falling-piece--balloon {
+  width: var(--piece-size) !important;
+  height: calc(var(--piece-size) * 1.28) !important;
+  border-radius: 50% 50% 46% 46%;
+  box-shadow: inset calc(var(--piece-size) * -.2) calc(var(--piece-size) * -.15) 0 rgba(255,255,255,0.25);
+}
+.falling-balloon-string {
+  position: absolute;
+  top: calc(var(--piece-size) * 1.2);
+  left: 50%;
+  width: 1px;
+  height: calc(var(--piece-size) * 1.3);
+  background: currentColor;
+  opacity: 0.55;
+}
+@media (max-width: 480px) {
+  .falling-piece:nth-child(even) { display: none; }
+  .falling-piece { opacity: 0.45; }
+}
