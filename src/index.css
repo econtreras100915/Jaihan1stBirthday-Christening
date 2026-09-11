@@ -672,7 +672,7 @@ body { background: #fbfcff; color: var(--ink); font-size: 15px; }
 @media (max-width:700px) { :root { --section-pad:48px; } .event-glass-card{padding:24px 16px}.gift-luxury-card{padding:30px 72px 30px 24px}.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.gallery-tile{min-height:140px}.program-timeline{grid-template-columns:1fr;gap:12px}.program-timeline::before{top:10%;bottom:10%;left:38px;right:auto;border-top:0;border-left:2px dashed var(--gold)}.program-card{display:grid;grid-template-columns:48px 1fr;text-align:left;column-gap:14px;min-height:0;padding:16px}.program-icon{grid-row:span 3;margin:0}.program-card h3{font-size:16px}.event-details-section .detail-grid{grid-template-columns:1fr !important}.event-details-section .detail-card{align-items:flex-start !important;text-align:left !important;min-height:0 !important}.event-details-section .detail-card h3,.event-details-section .detail-card p{text-align:left !important}.tiny-ceo-scene{transform:scale(.88);margin:-2px auto}.hero-section{padding-top:70px!important}.landing-name{font-size:3.45rem} }
 
 /* Original invitation theme restored. */
-:root { --navy-950:#0c3733; --navy-900:#124d46; --navy-800:#1a655c; --navy-700:#227d71; --blue-500:#5fb1c7; --gold-300:#ffe49a; --gold-400:#f7cf5c; --gold-500:#eab223; --cream-50:#fffaef; --cream-100:#fdf2d8; --tie-red:#e0748c; --ink:#123f3b; --ink-soft:#4f6d6a; --grad-navy:linear-gradient(160deg,var(--navy-950) 0%,var(--navy-800) 55%,var(--blue-500) 130%); --grad-gold:linear-gradient(135deg,var(--gold-300),var(--gold-500)); --grad-teal:linear-gradient(135deg,var(--navy-800),var(--navy-900)); --font-display:"Baloo 2","Fredoka",system-ui,sans-serif; --font-body:"Quicksand","Nunito",system-ui,sans-serif; --font-accent:"Fredoka","Baloo 2",system-ui,sans-serif; --font-script:"Caveat","Segoe Script",cursive; --max-width:720px; --section-pad:clamp(64px,11vw,108px); --shadow-soft:0 20px 50px rgba(12,55,51,.16); --shadow-gold:0 14px 34px rgba(234,178,35,.35); }
+:root { --navy-950:#0c3733; --navy-900:#124d46; --navy-800:#1a655c; --navy-700:#227d71; --blue-500:#5fb1c7; --gold-300:#ffe49a; --gold-400:#f7cf5c; --gold-500:#eab223; --cream-50:#fffaef; --cream-100:#fdf2d8; --tie-red:#e0748c; --ink:#123f3b; --ink-soft:#4f6d6a; --grad-navy:linear-gradient(160deg,var(--navy-950) 0%,var(--navy-800) 55%,var(--blue-500) 130%); --grad-gold:linear-gradient(135deg,var(--gold-300),var(--gold-500)); --grad-teal:linear-gradient(135deg,var(--navy-800),var(--navy-900)); --font-display:"Baloo 2","Fredoka",system-ui,sans-serif; --font-body:"Quicksand","Nunito",system-ui,sans-serif; --font-accent:"Fredoka","Baloo 2",system-ui,sans-serif; --font-script:"Caveat","Segoe Script",cursive; --max-width:720px; --section-pad:clamp(44px,8vw,72px); --shadow-soft:0 20px 50px rgba(12,55,51,.16); --shadow-gold:0 14px 34px rgba(234,178,35,.35); }
 body { background:var(--cream-50); color:var(--ink); font-family:var(--font-body); font-size:17px; }.section{padding:var(--section-pad) 24px}.section-cream{background:var(--cream-50);}.section-gold-tint{background:var(--cream-100)}.section-navy{background:var(--grad-navy);color:var(--white)}.heading-xl,.heading-lg{font-family:var(--font-display);}.heading-lg{font-size:clamp(2.2rem,6.5vw,3.2rem)}.body-copy{font-size:17.5px;color:var(--ink-soft)}.btn{font-family:var(--font-display);padding:16px 30px}.btn-gold{color:var(--navy-950);background:var(--grad-gold)}.eyebrow-note{font-family:var(--font-script);font-size:26px;color:var(--gold-300);text-transform:none;letter-spacing:.01em}.gallery-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.event-glass-card{padding:0;border:0;background:transparent;box-shadow:none;backdrop-filter:none}.event-date-row{display:none}.event-details-section .detail-card{background:var(--white)!important;border:1px solid rgba(26,101,92,.06)!important;border-radius:22px!important;padding:28px 26px!important;box-shadow:var(--shadow-soft)!important}.event-details-section .detail-card h3,.event-details-section .detail-card p{text-align:left!important}.gift-luxury-card{padding:30px 28px;background:var(--white);border:1px dashed rgba(234,178,35,.5);border-radius:22px;box-shadow:var(--shadow-soft);max-width:460px;text-align:center}.gift-teddy{display:none}.section-navy#home{background:var(--grad-navy)}
 .gift-suggestions-row { align-items: flex-start; }
 @media (max-width: 700px) { .gift-suggestions-row { gap: 8px !important; } .gift-suggestions-row > div { width: calc((100% - 16px) / 3) !important; } .gift-suggestions-row p { font-size: 11px !important; } }
@@ -686,10 +686,10 @@ body { background:var(--cream-50); color:var(--ink); font-family:var(--font-body
 .event-details-section .detail-card .btn { align-self: center; }
 @media (max-width: 700px) {
   .event-details-section .detail-grid { gap: 10px !important; }
-  .event-details-section .detail-card { min-height: 245px !important; padding: 18px 10px !important; }
+  .event-details-section .detail-card { min-height: 0 !important; padding: 18px 10px !important; }
   .event-details-section .detail-card h3 { font-size: 14px !important; }
   .event-details-section .detail-card p { font-size: 10.5px !important; line-height: 1.45; }
-  .event-details-section .detail-card .btn { margin-top: auto !important; padding: 8px 11px !important; font-size: 10px !important; }
+  .event-details-section .detail-card .btn { margin-top: 12px !important; padding: 8px 11px !important; font-size: 10px !important; }
 }
 
 /* User-provided invitation frame: preserve its centered open area for gift copy. */
@@ -754,11 +754,12 @@ body { background:var(--cream-50); color:var(--ink); font-family:var(--font-body
   .gate-intro { font-size: 12px; }
   .gate-celebration { font-size: 14px; }
 
-  .event-details-section .detail-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
-  .event-details-section .detail-card { min-height: 0 !important; padding: 20px !important; }
-  .event-details-section .detail-card h3 { font-size: 16px !important; }
-  .event-details-section .detail-card p { font-size: 13px !important; }
-  .event-details-section .detail-card .btn { margin-top: 14px !important; padding: 9px 14px !important; font-size: 12px !important; }
+  /* Keep the ceremony and reception cards side by side on compact phones. */
+  .event-details-section .detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  .event-details-section .detail-card { min-height: 0 !important; padding: 18px 10px !important; }
+  .event-details-section .detail-card h3 { font-size: 14px !important; }
+  .event-details-section .detail-card p { font-size: 10.5px !important; line-height: 1.45; }
+  .event-details-section .detail-card .btn { margin-top: 12px !important; padding: 8px 11px !important; font-size: 10px !important; }
 
   .event-program-grid { gap: 12px !important; }
   .event-program-grid > * { padding: 20px 10px 16px !important; border-radius: 20px !important; }

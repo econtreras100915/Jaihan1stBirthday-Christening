@@ -20,7 +20,7 @@
  *  Used in: LandingGate, HeroSection.
  * =============================================================================
  */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { PartyPopper, Star, Rocket } from "lucide-react";
 import flyingBossImg from "../assets/babyboss/flying-boss.png";
 
@@ -37,9 +37,59 @@ const balloons = [
   { left: "84%", size: 22, duration: "8.2s", delay: "0.8s", Icon: Rocket, color: "var(--gold-300)" },
 ];
 
-export default function FlyingBossTrail({ showBalloons = true }) {
+const flightThemes = {
+  cream: {
+    filter: "drop-shadow(0 8px 14px rgba(26, 101, 92, 0.38))",
+    streak: "linear-gradient(90deg, transparent, rgba(95, 177, 199, 0.78))",
+  },
+  gold: {
+    filter: "drop-shadow(0 8px 16px rgba(234, 178, 35, 0.62))",
+    streak: "linear-gradient(90deg, transparent, rgba(255, 212, 100, 0.92))",
+  },
+  navy: {
+    filter: "drop-shadow(0 8px 17px rgba(125, 211, 252, 0.82))",
+    streak: "linear-gradient(90deg, transparent, rgba(191, 219, 254, 0.95))",
+  },
+};
+
+export default function FlyingBossTrail({ showBalloons = true, siteWide = false }) {
+  const [theme, setTheme] = useState(siteWide ? "cream" : "navy");
+  const flightTheme = flightThemes[theme];
+
+  useEffect(() => {
+    if (!siteWide) return undefined;
+
+    const updateTheme = () => {
+      const elements = document.elementsFromPoint(window.innerWidth / 2, window.innerHeight / 2);
+      const section = elements.find((element) => element.closest?.("section"))?.closest("section");
+      const nextTheme = section?.classList.contains("section-navy")
+        ? "navy"
+        : section?.classList.contains("section-gold-tint")
+          ? "gold"
+          : "cream";
+      setTheme((currentTheme) => currentTheme === nextTheme ? currentTheme : nextTheme);
+    };
+
+    updateTheme();
+    window.addEventListener("scroll", updateTheme, { passive: true });
+    window.addEventListener("resize", updateTheme);
+    return () => {
+      window.removeEventListener("scroll", updateTheme);
+      window.removeEventListener("resize", updateTheme);
+    };
+  }, [siteWide]);
+
   return (
-    <div aria-hidden="true" style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 1 }}>
+    <div
+      aria-hidden="true"
+      style={{
+        position: siteWide ? "fixed" : "absolute",
+        inset: 0,
+        overflow: "hidden",
+        pointerEvents: "none",
+        zIndex: siteWide ? 20 : 1,
+      }}
+    >
       {bosses.map((b, i) => (
         <span
           key={i}
@@ -55,7 +105,7 @@ export default function FlyingBossTrail({ showBalloons = true }) {
           {/* motion streak trailing behind, angled to match the flight path */}
           <span
             className="boss-trail-streak"
-            style={{ width: b.size * 1.5, animationDuration: b.duration, animationDelay: b.delay }}
+            style={{ width: b.size * 1.5, animationDuration: b.duration, animationDelay: b.delay, background: flightTheme.streak }}
           />
           <img
             src={flyingBossImg}
@@ -64,7 +114,7 @@ export default function FlyingBossTrail({ showBalloons = true }) {
               width: "100%",
               height: "auto",
               display: "block",
-              filter: "drop-shadow(0 8px 14px rgba(0,0,0,0.4))",
+              filter: flightTheme.filter,
             }}
           />
         </span>

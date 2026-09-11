@@ -44,6 +44,7 @@ import GiftSection from "./components/GiftSection";
 import FAQSection from "./components/FAQSection";
 import ThankYouSection from "./components/ThankYouSection";
 import FallingKidsDecor from "./components/FallingKidsDecor";
+import FlyingBossTrail from "./components/FlyingBossTrail";
 
 export default function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,6 +71,7 @@ export default function App() {
 
       <main>
         {isOpen && <FallingKidsDecor />}
+        {isOpen && <FlyingBossTrail showBalloons={false} siteWide />}
         <HeroSection />
         <WelcomeSection />
         <EventDetailsSection />
