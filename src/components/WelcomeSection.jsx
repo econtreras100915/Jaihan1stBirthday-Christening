@@ -14,7 +14,6 @@ import { Heart } from "lucide-react";
 import WaveDivider from "./WaveDivider";
 import FloatingDecor from "./FloatingDecor";
 import ArtworkBackground from "./ArtworkBackground";
-import CloudRiderTrail from "./CloudRiderTrail";
 import welcomeBg from "../assets/backgrounds/welcome-bg.jpg";
 import { eventData } from "../data/eventData";
 
@@ -24,7 +23,6 @@ export default function WelcomeSection() {
       <WaveDivider fill="#fffaef" />
       <ArtworkBackground src={welcomeBg} fadeColor="var(--cream-50)" focalPosition="65% center" tintOpacity={0.42} />
       <FloatingDecor Icon={Heart} color="rgba(224,116,140,0.5)" />
-      <CloudRiderTrail />
 
       <div
         className="section-inner"

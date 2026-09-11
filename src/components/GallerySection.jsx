@@ -12,7 +12,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import WaveDivider from "./WaveDivider";
 import ArtworkBackground from "./ArtworkBackground";
-import CloudRiderTrail from "./CloudRiderTrail";
 import welcomeBg from "../assets/backgrounds/welcome-bg.jpg";
 import heroImg from "../assets/babyboss/hero.jpg";
 import cuteImg from "../assets/babyboss/cute.jpg";
@@ -40,7 +39,6 @@ export default function GallerySection() {
     <section className="section section-cream" style={{ position: "relative" }}>
       <WaveDivider fill="#fffaef" />
       <ArtworkBackground src={welcomeBg} fadeColor="var(--cream-50)" focalPosition="65% center" mirror tintOpacity={0.62} />
-      <CloudRiderTrail count={1} />
 
       <div className="section-inner">
         <img src={galleryBanner} alt="Our Gallery" style={{ width: "100%", maxWidth: 620, margin: "-14px auto 28px", borderRadius: 22, border: "4px solid var(--white)", boxShadow: "var(--shadow-soft)" }} />
