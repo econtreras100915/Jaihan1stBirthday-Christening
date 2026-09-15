@@ -16,10 +16,13 @@ import SectionHeading from "./SectionHeading";
 import ArtworkBackground from "./ArtworkBackground";
 import familyBg from "../assets/backgrounds/family-bg.jpg";
 import familyImg from "../assets/babyboss/family.jpg";
+import { voiceScript } from "../data/voiceScript";
+import { useSectionVoice } from "../hooks/useSectionVoice";
 
 export default function FamilySection() {
+  const voiceRef = useSectionVoice(voiceScript.family);
   return (
-    <section className="section section-gold-tint" style={{ position: "relative" }}>
+    <section ref={voiceRef} className="section section-gold-tint" style={{ position: "relative" }}>
       <WaveDivider fill="#fdf2d8" />
       <ArtworkBackground src={familyBg} fadeColor="var(--cream-100)" focalPosition="center 30%" tintOpacity={0.4} />
 

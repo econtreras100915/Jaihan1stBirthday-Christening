@@ -14,6 +14,8 @@ import { HelpCircle, Plus } from "lucide-react";
 import WaveDivider from "./WaveDivider";
 import SectionHeading from "./SectionHeading";
 import { eventData } from "../data/eventData";
+import { voiceScript } from "../data/voiceScript";
+import { useSectionVoice } from "../hooks/useSectionVoice";
 
 function FAQItem({ question, answer, isOpen, onToggle }) {
   return (
@@ -66,10 +68,11 @@ function FAQItem({ question, answer, isOpen, onToggle }) {
 
 export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState(0);
+  const voiceRef = useSectionVoice(voiceScript.faq);
   if (!eventData.faq?.length) return null;
 
   return (
-    <section className="section section-cream" style={{ position: "relative" }}>
+    <section ref={voiceRef} className="section section-cream" style={{ position: "relative" }}>
       <WaveDivider fill="#fffaef" />
 
       <div className="section-inner">

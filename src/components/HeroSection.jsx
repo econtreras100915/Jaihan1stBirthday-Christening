@@ -20,9 +20,12 @@ import FloatingDecor from "./FloatingDecor";
 import FlyingBossTrail from "./FlyingBossTrail";
 import { BalloonCluster, GiftBoxCorner, CloudRow, CrownMedallion } from "./FestiveDecor";
 import { eventData } from "../data/eventData";
+import { voiceScript } from "../data/voiceScript";
+import { useSectionVoice } from "../hooks/useSectionVoice";
 
 export default function HeroSection() {
   const wrapRef = useRef(null);
+  const voiceRef = useSectionVoice(voiceScript.hero);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const rotateX = useSpring(useTransform(my, [-40, 40], [6, -6]), { stiffness: 120, damping: 14 });
@@ -31,6 +34,7 @@ export default function HeroSection() {
   function handleMouseLeave() { mx.set(0); my.set(0); }
   return (
     <section
+      ref={voiceRef}
       id="home"
       className="section section-navy"
       style={{

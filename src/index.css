@@ -853,3 +853,40 @@ body { background:var(--cream-50); color:var(--ink); font-family:var(--font-body
   .falling-piece:nth-child(even) { display: none; }
   .falling-piece { opacity: 0.45; }
 }
+
+/* ============================================================================
+   VOICE NARRATION — floating mute/unmute toggle
+   ============================================================================ */
+.voice-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 110;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-400);
+  background: var(--grad-navy);
+  color: var(--gold-300);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.voice-toggle-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: var(--shadow-hover, var(--shadow-soft));
+}
+.voice-toggle-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+@media (max-width: 480px) {
+  .voice-toggle-btn {
+    bottom: 14px;
+    right: 14px;
+    width: 44px;
+    height: 44px;
+  }
+}

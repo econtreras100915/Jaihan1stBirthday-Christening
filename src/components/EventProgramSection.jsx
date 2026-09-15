@@ -16,6 +16,8 @@ import { motion } from "framer-motion";
 import { Wand2, Camera, Gamepad2, Palette, PartyPopper } from "lucide-react";
 import FloatingDecor from "./FloatingDecor";
 import { eventData } from "../data/eventData";
+import { voiceScript } from "../data/voiceScript";
+import { useSectionVoice } from "../hooks/useSectionVoice";
 
 const iconMap = {
   wand: Wand2,
@@ -66,10 +68,11 @@ function ProgramCard({ label, icon, delay }) {
 
 export default function EventProgramSection() {
   const items = eventData.eventPrograms || [];
+  const voiceRef = useSectionVoice(voiceScript.eventProgram);
   if (!items.length) return null;
 
   return (
-    <section className="section section-navy" style={{ position: "relative", textAlign: "center" }}>
+    <section ref={voiceRef} className="section section-navy" style={{ position: "relative", textAlign: "center" }}>
       <FloatingDecor Icon={PartyPopper} color="var(--gold-400)" />
 
       <div className="section-inner">

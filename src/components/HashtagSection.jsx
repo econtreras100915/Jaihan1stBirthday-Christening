@@ -16,10 +16,13 @@ import FloatingDecor from "./FloatingDecor";
 import ArtworkBackground from "./ArtworkBackground";
 import hashtagSkyBg from "../assets/backgrounds/hashtag-sky-bg.png";
 import { eventData } from "../data/eventData";
+import { voiceScript } from "../data/voiceScript";
+import { useSectionVoice } from "../hooks/useSectionVoice";
 
 export default function HashtagSection() {
+  const voiceRef = useSectionVoice(voiceScript.hashtag);
   return (
-    <section className="section section-navy" style={{ position: "relative", textAlign: "center" }}>
+    <section ref={voiceRef} className="section section-navy" style={{ position: "relative", textAlign: "center" }}>
       <WaveDivider fill="var(--navy-950)" />
       <ArtworkBackground src={hashtagSkyBg} fadeColor="var(--navy-950)" focalPosition="center" tintOpacity={0.46} />
       <FloatingDecor Icon={Instagram} color="rgba(255,255,255,0.35)" />

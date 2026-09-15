@@ -14,7 +14,7 @@
  *  Used in: App.jsx (rendered first, before the rest of the page).
  * =============================================================================
  */
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import heroImg from "../assets/babyboss/hero.jpg";
@@ -23,6 +23,8 @@ import ArtworkBackground from "./ArtworkBackground";
 import FlyingBossTrail from "./FlyingBossTrail";
 import { BalloonCluster, GiftBoxCorner, CloudRow, CrownMedallion } from "./FestiveDecor";
 import { eventData } from "../data/eventData";
+import { voiceScript } from "../data/voiceScript";
+import { useVoiceNarration } from "../context/VoiceNarrationContext";
 
 function getGuestName() {
   if (typeof window === "undefined") return "";
@@ -40,6 +42,16 @@ function fireConfetti() {
 export default function LandingGate({ onOpen }) {
   const [isClosing, setIsClosing] = useState(false);
   const guestName = useMemo(getGuestName, []);
+  const { speak } = useVoiceNarration();
+
+  // Greet the guest with the "meeting's about to start" line as soon as
+  // the gate shows up. Some mobile browsers block audio/speech before any
+  // tap on the page — harmless if so, the line just plays a beat late,
+  // right after the guest's first tap lands.
+  useEffect(() => {
+    speak(voiceScript.landingGate.text, { audioSrc: voiceScript.landingGate.audioSrc });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleOpen() {
     fireConfetti();

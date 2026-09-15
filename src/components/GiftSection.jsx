@@ -16,6 +16,8 @@ import { Gift, Banknote, Shirt, Puzzle } from "lucide-react";
 import WaveDivider from "./WaveDivider";
 import SectionHeading from "./SectionHeading";
 import { eventData } from "../data/eventData";
+import { voiceScript } from "../data/voiceScript";
+import { useSectionVoice } from "../hooks/useSectionVoice";
 
 const iconMap = {
   cash: Banknote,
@@ -46,9 +48,10 @@ function SuggestionIcon({ label, icon, delay }) {
 
 export default function GiftSection() {
   const suggestions = eventData.giftSuggestions || [];
+  const voiceRef = useSectionVoice(voiceScript.gift);
 
   return (
-    <section className="section section-cream gift-frame-section" style={{ position: "relative" }}>
+    <section ref={voiceRef} className="section section-cream gift-frame-section" style={{ position: "relative" }}>
       <WaveDivider fill="#fffaef" />
 
       <div className="section-inner" style={{ textAlign: "center" }}>

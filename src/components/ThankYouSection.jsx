@@ -16,10 +16,13 @@ import ArtworkBackground from "./ArtworkBackground";
 import heroBg from "../assets/backgrounds/hero-bg.jpg";
 import thankYouBanner from "../assets/reference/thank-you-banner.jpg";
 import { eventData } from "../data/eventData";
+import { voiceScript } from "../data/voiceScript";
+import { useSectionVoice } from "../hooks/useSectionVoice";
 
 export default function ThankYouSection() {
+  const voiceRef = useSectionVoice(voiceScript.thankYou);
   return (
-    <section className="section section-navy" style={{ position: "relative", textAlign: "center", paddingBottom: 40 }}>
+    <section ref={voiceRef} className="section section-navy" style={{ position: "relative", textAlign: "center", paddingBottom: 40 }}>
       <WaveDivider fill="var(--navy-950)" />
       <ArtworkBackground src={heroBg} fadeColor="var(--navy-950)" focalPosition="center" mirror tintOpacity={0.6} />
 

@@ -17,12 +17,15 @@ import SectionHeading from "./SectionHeading";
 import ArtworkBackground from "./ArtworkBackground";
 import wideBg from "../assets/backgrounds/wide-bg.jpg";
 import { eventData } from "../data/eventData";
+import { voiceScript } from "../data/voiceScript";
+import { useSectionVoice } from "../hooks/useSectionVoice";
 
 export default function ProgramSection() {
+  const voiceRef = useSectionVoice(voiceScript.program);
   if (!eventData.program?.length) return null;
 
   return (
-    <section className="section section-gold-tint" style={{ position: "relative" }}>
+    <section ref={voiceRef} className="section section-gold-tint" style={{ position: "relative" }}>
       <WaveDivider fill="#fdf2d8" />
       <ArtworkBackground src={wideBg} fadeColor="var(--cream-100)" focalPosition="center" tintOpacity={0.55} />
 

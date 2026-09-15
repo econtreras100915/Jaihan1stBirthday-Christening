@@ -18,6 +18,8 @@ import { useCountdown } from "../hooks/useCountdown";
 import { eventData } from "../data/eventData";
 import cuteImg from "../assets/babyboss/cute.jpg";
 import countdownBanner from "../assets/reference/countdown-banner.jpg";
+import { voiceScript } from "../data/voiceScript";
+import { useSectionVoice } from "../hooks/useSectionVoice";
 
 function FlipCard({ value, label }) {
   const display = String(value).padStart(2, "0");
@@ -57,9 +59,10 @@ function FlipCard({ value, label }) {
 
 export default function CountdownSection() {
   const { days, hours, minutes, seconds, isOver } = useCountdown(eventData.eventDateISO);
+  const voiceRef = useSectionVoice(voiceScript.countdown);
 
   return (
-    <section className="section section-cream" style={{ position: "relative" }}>
+    <section ref={voiceRef} className="section section-cream" style={{ position: "relative" }}>
       <WaveDivider fill="#fffaef" />
       <ArtworkBackground src={countdownBg} fadeColor="var(--cream-50)" focalPosition="center 35%" tintOpacity={0.45} />
 

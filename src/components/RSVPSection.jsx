@@ -22,6 +22,8 @@ import WaveDivider from "./WaveDivider";
 import SectionHeading from "./SectionHeading";
 import FloatingDecor from "./FloatingDecor";
 import { eventData } from "../data/eventData";
+import { voiceScript } from "../data/voiceScript";
+import { useSectionVoice } from "../hooks/useSectionVoice";
 
 /** Turns a normal "viewform" link into Google's embeddable iframe URL. */
 function toEmbedUrl(url) {
@@ -32,9 +34,10 @@ function toEmbedUrl(url) {
 export default function RSVPSection() {
   const { googleFormUrl, deadlineLabel } = eventData.rsvp;
   const [loaded, setLoaded] = useState(false);
+  const voiceRef = useSectionVoice(voiceScript.rsvp);
 
   return (
-    <section className="section section-navy" style={{ position: "relative", textAlign: "center" }}>
+    <section ref={voiceRef} className="section section-navy" style={{ position: "relative", textAlign: "center" }}>
       <WaveDivider fill="var(--navy-950)" />
       <FloatingDecor Icon={PartyPopper} color="var(--gold-400)" />
 

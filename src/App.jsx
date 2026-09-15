@@ -45,6 +45,7 @@ import FAQSection from "./components/FAQSection";
 import ThankYouSection from "./components/ThankYouSection";
 import FallingKidsDecor from "./components/FallingKidsDecor";
 import FlyingBossTrail from "./components/FlyingBossTrail";
+import VoiceToggle from "./components/VoiceToggle";
 
 export default function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,6 +67,10 @@ export default function App() {
   return (
     <>
       {!isOpen && <LandingGate onOpen={() => setIsOpen(true)} />}
+
+      {/* Mounted always (not just after isOpen) so guests can mute the
+          voice invitation right from the landing gate if they want to. */}
+      <VoiceToggle />
 
       {isOpen && <ScrollProgress />}
 

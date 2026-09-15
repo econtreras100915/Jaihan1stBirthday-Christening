@@ -15,9 +15,12 @@ import { UsersRound } from "lucide-react";
 import WaveDivider from "./WaveDivider";
 import SectionHeading from "./SectionHeading";
 import { eventData } from "../data/eventData";
+import { voiceScript } from "../data/voiceScript";
+import { useSectionVoice } from "../hooks/useSectionVoice";
 
 export default function GodparentsSection() {
   const sponsors = eventData.principalSponsors || [];
+  const voiceRef = useSectionVoice(voiceScript.godparents);
   if (!sponsors.length) return null;
 
   const groups = sponsors.reduce((acc, person) => {
@@ -27,7 +30,7 @@ export default function GodparentsSection() {
   }, {});
 
   return (
-    <section className="section section-cream" style={{ position: "relative" }}>
+    <section ref={voiceRef} className="section section-cream" style={{ position: "relative" }}>
       <WaveDivider fill="#fffaef" />
 
       <div className="section-inner" style={{ textAlign: "center" }}>

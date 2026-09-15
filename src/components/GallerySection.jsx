@@ -22,6 +22,8 @@ import bossStandingImg from "../assets/babyboss/boss-standing.png";
 import bossSmirkImg from "../assets/babyboss/boss-smirk.png";
 import bossCrewImg from "../assets/babyboss/boss-crew.png";
 import galleryBanner from "../assets/reference/gallery-banner.jpg";
+import { voiceScript } from "../data/voiceScript";
+import { useSectionVoice } from "../hooks/useSectionVoice";
 
 const photos = [
   { src: heroImg, alt: "Jaihann in his little suit" },
@@ -35,8 +37,9 @@ const photos = [
 ];
 
 export default function GallerySection() {
+  const voiceRef = useSectionVoice(voiceScript.gallery);
   return (
-    <section className="section section-cream" style={{ position: "relative" }}>
+    <section ref={voiceRef} className="section section-cream" style={{ position: "relative" }}>
       <WaveDivider fill="#fffaef" />
       <ArtworkBackground src={welcomeBg} fadeColor="var(--cream-50)" focalPosition="65% center" mirror tintOpacity={0.62} />
 

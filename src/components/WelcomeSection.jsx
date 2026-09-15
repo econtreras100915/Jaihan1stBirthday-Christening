@@ -16,10 +16,13 @@ import FloatingDecor from "./FloatingDecor";
 import ArtworkBackground from "./ArtworkBackground";
 import welcomeBg from "../assets/backgrounds/welcome-bg.jpg";
 import { eventData } from "../data/eventData";
+import { voiceScript } from "../data/voiceScript";
+import { useSectionVoice } from "../hooks/useSectionVoice";
 
 export default function WelcomeSection() {
+  const voiceRef = useSectionVoice(voiceScript.welcome);
   return (
-    <section className="section section-cream" style={{ position: "relative" }}>
+    <section ref={voiceRef} className="section section-cream" style={{ position: "relative" }}>
       <WaveDivider fill="#fffaef" />
       <ArtworkBackground src={welcomeBg} fadeColor="var(--cream-50)" focalPosition="65% center" tintOpacity={0.42} />
       <FloatingDecor Icon={Heart} color="rgba(224,116,140,0.5)" />

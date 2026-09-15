@@ -20,6 +20,8 @@ import eventDetailsTemplate from "../assets/backgrounds/event-details-template.p
 import { eventData } from "../data/eventData";
 import { buildGoogleCalendarLink } from "../utils/calendarLink";
 import { buildMapsLink } from "../utils/mapsLink";
+import { voiceScript } from "../data/voiceScript";
+import { useSectionVoice } from "../hooks/useSectionVoice";
 
 function DetailCard({ icon, title, lines, mapHref, delay }) {
   return (
@@ -68,6 +70,7 @@ function DetailCard({ icon, title, lines, mapHref, delay }) {
 
 export default function EventDetailsSection() {
   const { ceremony, reception, eventDateLabel, eventDayLabel, eventTimeLabel } = eventData;
+  const voiceRef = useSectionVoice(voiceScript.eventDetails);
 
   const calendarHref = buildGoogleCalendarLink({
     title: eventData.calendar.title,
@@ -82,7 +85,7 @@ export default function EventDetailsSection() {
   const receptionMapHref = showReception ? buildMapsLink(reception.venue, reception.address) : "";
 
   return (
-    <section className="section section-gold-tint event-details-section" style={{ position: "relative" }}>
+    <section ref={voiceRef} className="section section-gold-tint event-details-section" style={{ position: "relative" }}>
       <WaveDivider fill="#fdf2d8" />
 
       <div className="section-inner">
