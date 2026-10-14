@@ -36,22 +36,19 @@ export default function GodparentsSection() {
       <div className="section-inner" style={{ textAlign: "center" }}>
         <SectionHeading eyebrow={<><UsersRound size={14} /> standing with us</>} title="Principal sponsors" />
 
-        <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+        <div className="sponsors-grid">
           {Object.entries(groups).map(([role, names], i) => (
             <motion.div
               key={role}
+              className="sponsors-card"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              style={{
-                background: "var(--white)", borderRadius: 20, padding: "22px 26px",
-                minWidth: 180, boxShadow: "var(--shadow-soft)",
-              }}
             >
-              <h3 className="font-display" style={{ margin: 0, fontSize: 15, color: "var(--gold-500)" }}>{role}</h3>
+              <h3 className="font-display">{role}</h3>
               {names.map((name) => (
-                <p key={name} style={{ margin: "8px 0 0", fontSize: 15 }}>{name}</p>
+                <p key={name}>{name}</p>
               ))}
             </motion.div>
           ))}
