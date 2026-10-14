@@ -18,6 +18,7 @@ import familyBg from "../assets/backgrounds/family-bg.jpg";
 import familyImg from "../assets/babyboss/family.jpg";
 import { voiceScript } from "../data/voiceScript";
 import { useSectionVoice } from "../hooks/useSectionVoice";
+import { eventData } from "../data/eventData";
 
 export default function FamilySection() {
   const voiceRef = useSectionVoice(voiceScript.family);
@@ -43,6 +44,16 @@ export default function FamilySection() {
           }}
         >
           <img src={familyImg} alt="Jaihann with mom and dad" style={{ width: "100%" }} />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.18, duration: 0.5 }}
+          className="family-parents"
+        >
+          <span>With love from</span>
+          <strong>{eventData.parents.mother} <i>&amp;</i> {eventData.parents.father}</strong>
         </motion.div>
       </div>
     </section>

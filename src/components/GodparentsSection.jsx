@@ -30,7 +30,7 @@ export default function GodparentsSection() {
   }, {});
 
   return (
-    <section ref={voiceRef} className="section section-cream" style={{ position: "relative" }}>
+    <section ref={voiceRef} id="godparents" className="section section-cream" style={{ position: "relative" }}>
       <WaveDivider fill="#fffaef" />
 
       <div className="section-inner" style={{ textAlign: "center" }}>

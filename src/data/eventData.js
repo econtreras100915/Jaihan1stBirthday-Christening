@@ -16,6 +16,12 @@ export const eventData = {
   celebrantName: "Jaihann",
   celebrantFullTitle: "Jaihann's 1st Birthday & Christening",
 
+  // Parents — replace the bracketed placeholders with their full names.
+  parents: {
+    mother: "Mommy [Name]",
+    father: "Daddy [Name]",
+  },
+
   // Countdown target — the site counts down to this exact date/time.
   // Format: "YYYY-MM-DDTHH:mm:ss" (24-hour clock, local time).
   eventDateISO: "2026-11-07T10:00:00",
@@ -29,15 +35,15 @@ export const eventData = {
   ceremony: {
     name: "Christening",
     venue: "Diocesan Shrine and Parish of St. Augustine",
-    address: "", // optional street address / city — shown under the venue name if filled in
+    address: "Church address to be confirmed", // replace with the full street address / city
     time: "", // optional, e.g. "10:00 AM"
   },
 
   // Reception (birthday celebration) — optional, hidden if venue is blank -----
   reception: {
     name: "Reception",
-    venue: "Sample Reception Venue",
-    address: "Sample Address",
+    venue: "Reception venue to be announced",
+    address: "Venue address to be confirmed",
     time: "5:00 PM",
   },
 
@@ -107,8 +113,10 @@ export const eventData = {
   // Leave this array empty to hide the section entirely. Fill in names to
   // show a "Principal Sponsors" section, grouped by role.
   principalSponsors: [
-    // { name: "", role: "Ninong" },
-    // { name: "", role: "Ninang" },
+    { name: "Ninong [Name]", role: "Ninong" },
+    { name: "Ninong [Name]", role: "Ninong" },
+    { name: "Ninang [Name]", role: "Ninang" },
+    { name: "Ninang [Name]", role: "Ninang" },
   ],
 
   // RSVP -------------------------------------------------------------------
@@ -131,12 +139,12 @@ export const eventData = {
     // Google Sheet in the background — guests never leave the site and
     // you don't need to check email at all.
     googleForm: {
-      formId: "", // the long ID from the form's URL, between /d/e/ and /formResponse
+      formId: "1FAIpQLSd7pwM7cV0NvldvJ_aZbngw6otGJQjS6hxUZ72FP80TUh6yuQ", // the long ID from the form's URL, between /d/e/ and /formResponse
       entryIds: {
-        name: "", // entry ID for the "Your Name" question
-        attending: "", // entry ID for the "Will you be attending?" question
-        guests: "", // entry ID for the "Number of guests" question
-        message: "", // entry ID for the "Message for the boss" question
+        name: "442132112", // entry ID for the "Your Name" question
+        attending: "1006697637", // entry ID for the "Will you be attending?" question
+        guests: "350974236", // entry ID for the "Number of guests" question
+        message: "2106536330", // entry ID for the "Message for the boss" question
       },
     },
   },

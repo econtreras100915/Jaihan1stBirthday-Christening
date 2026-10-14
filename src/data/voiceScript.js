@@ -2,20 +2,21 @@
  * =============================================================================
  *  VOICE SCRIPT — kid "Boss Baby" narration, one entry per section
  * =============================================================================
- *  Each key matches a section in App.jsx. `text` is read aloud with the
- *  browser's built-in text-to-speech the moment that section scrolls into
- *  view, so the voice invitation works immediately with zero setup.
+ *  Each key matches a section in App.jsx. Every entry currently has
+ *  `audioSrc: null`, which means the site plays nothing for that section —
+ *  the browser's text-to-speech fallback is turned off (see
+ *  `ttsFallbackEnabled` in main.jsx) because it only pitch-shifts an adult
+ *  voice and ends up sounding robotic, not like a real kid.
  *
- *  Got an actual kid voice actor recording for a section? Drop the audio
- *  file in src/assets/voice/ and set that section's `audioSrc` to the
- *  imported file — the real recording is used instead automatically, and
- *  text-to-speech is only ever used as the fallback. No other code needs
- *  to change.
- *
- *  Example once you have a real recording:
+ *  Once a real recording (a real kid, or an AI voice generator's young-boy
+ *  preset) is ready for a section, see src/assets/voice/README.md for the
+ *  exact steps — short version:
  *    import heroVoice from "../assets/voice/hero.mp3";
  *    ...
  *    hero: { text: "...", audioSrc: heroVoice },
+ *  The real recording is used automatically once `audioSrc` is set — no
+ *  other code needs to change, and you can wire sections in one at a time
+ *  as recordings come in.
  * =============================================================================
  */
 

@@ -34,12 +34,12 @@ function SuggestionIcon({ label, icon, delay }) {
       viewport={{ once: true, margin: "-30px" }}
       whileHover={{ y: -4, rotate: [0, -3, 3, -3, 0] }}
       transition={{ duration: 0.5, delay, ease: "easeOut" }}
-      style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, width: 108 }}
+      className="gift-suggestion"
     >
-      <div style={{ width: 56, height: 56, borderRadius: "50%", display: "grid", placeItems: "center", background: "rgba(234,178,35,0.14)", color: "var(--gold-500)", border: "2px solid rgba(234,178,35,0.35)" }}>
+      <div className="gift-suggestion__icon">
         <Icon size={24} strokeWidth={2} />
       </div>
-      <p style={{ margin: 0, fontFamily: "var(--font-accent)", fontWeight: 600, fontSize: 13.5, color: "var(--navy-900)", textAlign: "center" }}>
+      <p>
         {label}
       </p>
     </motion.div>
@@ -64,16 +64,17 @@ export default function GiftSection() {
           transition={{ duration: 0.55 }}
           className="gift-luxury-card"
         >
+          <div className="gift-card-kicker"><Gift size={15} /> For our little boss</div>
           <p className="body-copy" style={{ margin: 0 }}>{eventData.giftMessage}</p>
 
           {suggestions.length > 0 && (
-            <div className="gift-suggestions-row" style={{ display: "flex", justifyContent: "center", flexWrap: "nowrap", gap: 18, marginTop: 26, paddingTop: 24, borderTop: "1px dashed rgba(26,101,92,0.12)" }}>
+            <div className="gift-suggestions-row">
               {suggestions.map((item, i) => (
               <SuggestionIcon key={item.label} label={item.label} icon={item.icon} delay={i * 0.08} />
               ))}
             </div>
           )}
-          <div className="gift-teddy" aria-hidden="true">🧸</div>
+          <p className="gift-card-footer">A thoughtful surprise is lovely, but celebrating with you is the best gift of all.</p>
         </motion.div>
       </div>
     </section>

@@ -12,7 +12,7 @@
  */
 import React from "react";
 import { motion } from "framer-motion";
-import { Church, CalendarPlus, MapPin, Clock, Shirt, CalendarDays } from "lucide-react";
+import { Church, CalendarPlus, MapPin, Clock, CalendarDays } from "lucide-react";
 import WaveDivider from "./WaveDivider";
 import SectionHeading from "./SectionHeading";
 import ArtworkBackground from "./ArtworkBackground";
@@ -85,7 +85,7 @@ export default function EventDetailsSection() {
   const receptionMapHref = showReception ? buildMapsLink(reception.venue, reception.address) : "";
 
   return (
-    <section ref={voiceRef} className="section section-gold-tint event-details-section" style={{ position: "relative" }}>
+    <section ref={voiceRef} id="details" className="section section-gold-tint event-details-section" style={{ position: "relative" }}>
       <WaveDivider fill="#fdf2d8" />
 
       <div className="section-inner">
@@ -147,11 +147,6 @@ export default function EventDetailsSection() {
             </p>
           )}
 
-          {eventData.dressCode && (
-            <p className="badge-pill" style={{ marginTop: 16, background: "rgba(95,177,199,0.14)", border: "1px solid rgba(95,177,199,0.35)", color: "var(--blue-500)" }}>
-              <Shirt size={14} /> {eventData.dressCode}
-            </p>
-          )}
         </motion.div></div>
       </div>
     </section>

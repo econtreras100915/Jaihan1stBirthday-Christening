@@ -32,6 +32,8 @@ import ScrollProgress from "./components/ScrollProgress";
 import HeroSection from "./components/HeroSection";
 import WelcomeSection from "./components/WelcomeSection";
 import EventDetailsSection from "./components/EventDetailsSection";
+import ReminderSection from "./components/ReminderSection";
+import DressCodeSection from "./components/DressCodeSection";
 import CountdownSection from "./components/CountdownSection";
 import ProgramSection from "./components/ProgramSection";
 import EventProgramSection from "./components/EventProgramSection";
@@ -46,6 +48,7 @@ import ThankYouSection from "./components/ThankYouSection";
 import FallingKidsDecor from "./components/FallingKidsDecor";
 import FlyingBossTrail from "./components/FlyingBossTrail";
 import VoiceToggle from "./components/VoiceToggle";
+import NavigationMenu from "./components/NavigationMenu";
 
 export default function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -73,6 +76,7 @@ export default function App() {
       <VoiceToggle />
 
       {isOpen && <ScrollProgress />}
+      {isOpen && <NavigationMenu />}
 
       <main>
         {isOpen && <FallingKidsDecor />}
@@ -80,6 +84,8 @@ export default function App() {
         <HeroSection />
         <WelcomeSection />
         <EventDetailsSection />
+        <ReminderSection />
+        <DressCodeSection />
         <CountdownSection />
         <ProgramSection />
         <EventProgramSection />

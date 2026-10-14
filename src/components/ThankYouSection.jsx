@@ -10,7 +10,7 @@
  */
 import React from "react";
 import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
+import { Heart, Code2, ExternalLink, Sparkles } from "lucide-react";
 import WaveDivider from "./WaveDivider";
 import ArtworkBackground from "./ArtworkBackground";
 import heroBg from "../assets/backgrounds/hero-bg.jpg";
@@ -56,6 +56,25 @@ export default function ThankYouSection() {
         <p style={{ marginTop: 34, fontSize: 12.5, color: "rgba(255,255,255,0.4)", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
           Made with <Heart size={12} fill="currentColor" /> for {eventData.celebrantName}
         </p>
+
+        <motion.div
+          className="developer-links"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.25, duration: 0.5 }}
+        >
+          <a href="https://elmarcontrerasportfolio.vercel.app/" target="_blank" rel="noopener noreferrer" className="developer-link">
+            <span className="developer-link__icon"><Code2 size={20} /></span>
+            <span className="developer-link__copy"><small>Developed by</small><strong>Elmar Contreras</strong></span>
+            <ExternalLink className="developer-link__external" size={16} />
+          </a>
+          <a href="https://eventdigitalinvitation.vercel.app/" target="_blank" rel="noopener noreferrer" className="developer-link">
+            <span className="developer-link__icon developer-link__icon--gold"><Sparkles size={20} /></span>
+            <span className="developer-link__copy"><small>Want a website like this?</small><strong>Visit Event Digital Invitation</strong></span>
+            <ExternalLink className="developer-link__external" size={16} />
+          </a>
+        </motion.div>
       </div>
     </section>
   );

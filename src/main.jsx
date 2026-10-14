@@ -14,7 +14,11 @@ import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <VoiceNarrationProvider>
+    {/* ttsFallbackEnabled stays false — the browser's pitch-shifted robot
+        voice doesn't sound like a real kid. Sections play nothing until a
+        real recording is added (see src/assets/voice/README.md). Flip to
+        true only for temporary local testing. */}
+    <VoiceNarrationProvider ttsFallbackEnabled={false}>
       <App />
     </VoiceNarrationProvider>
   </React.StrictMode>

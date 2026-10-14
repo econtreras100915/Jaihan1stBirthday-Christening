@@ -8,9 +8,9 @@
  *  Used in: App.jsx
  * =============================================================================
  */
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Instagram, Camera } from "lucide-react";
+import { Instagram, Camera, Check, Copy, Send, Sparkles } from "lucide-react";
 import WaveDivider from "./WaveDivider";
 import FloatingDecor from "./FloatingDecor";
 import ArtworkBackground from "./ArtworkBackground";
@@ -21,11 +21,37 @@ import { useSectionVoice } from "../hooks/useSectionVoice";
 
 export default function HashtagSection() {
   const voiceRef = useSectionVoice(voiceScript.hashtag);
+  const [isSaved, setIsSaved] = useState(false);
+
+  const copyHashtag = async () => {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(eventData.hashtag);
+      } else {
+        const helper = document.createElement("textarea");
+        helper.value = eventData.hashtag;
+        helper.style.position = "fixed";
+        helper.style.opacity = "0";
+        document.body.appendChild(helper);
+        helper.select();
+        document.execCommand("copy");
+        helper.remove();
+      }
+      setIsSaved(true);
+      window.setTimeout(() => setIsSaved(false), 2200);
+    } catch (error) {
+      setIsSaved(false);
+    }
+  };
+
   return (
     <section ref={voiceRef} className="section section-navy" style={{ position: "relative", textAlign: "center" }}>
       <WaveDivider fill="var(--navy-950)" />
       <ArtworkBackground src={hashtagSkyBg} fadeColor="var(--navy-950)" focalPosition="center" tintOpacity={0.46} />
       <FloatingDecor Icon={Instagram} color="rgba(255,255,255,0.35)" />
+      <span className="hashtag-sparkle hashtag-sparkle--one" aria-hidden="true">✦</span>
+      <span className="hashtag-sparkle hashtag-sparkle--two" aria-hidden="true">✦</span>
+      <span className="hashtag-sparkle hashtag-sparkle--three" aria-hidden="true">✦</span>
 
       <div className="section-inner">
         <motion.div
@@ -72,6 +98,39 @@ export default function HashtagSection() {
         >
           {eventData.hashtagNote}
         </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="hashtag-steps"
+        >
+          {[
+            { Icon: Camera, label: "Snap" },
+            { Icon: Send, label: "Post" },
+            { Icon: Sparkles, label: "Tag us" },
+          ].map(({ Icon, label }) => (
+            <div className="hashtag-step" key={label}>
+              <span><Icon size={17} /></span>
+              <small>{label}</small>
+            </div>
+          ))}
+        </motion.div>
+
+        <motion.button
+          type="button"
+          onClick={copyHashtag}
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          whileTap={{ scale: 0.97 }}
+          className="hashtag-share-btn"
+        >
+          {isSaved ? <Check size={17} /> : <Copy size={17} />}
+          {isSaved ? "Hashtag copied!" : "Copy hashtag"}
+        </motion.button>
       </div>
     </section>
   );

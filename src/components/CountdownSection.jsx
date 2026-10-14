@@ -16,7 +16,6 @@ import ArtworkBackground from "./ArtworkBackground";
 import countdownBg from "../assets/backgrounds/countdown-bg.jpg";
 import { useCountdown } from "../hooks/useCountdown";
 import { eventData } from "../data/eventData";
-import cuteImg from "../assets/babyboss/cute.jpg";
 import countdownBanner from "../assets/reference/countdown-banner.jpg";
 import { voiceScript } from "../data/voiceScript";
 import { useSectionVoice } from "../hooks/useSectionVoice";
@@ -62,7 +61,7 @@ export default function CountdownSection() {
   const voiceRef = useSectionVoice(voiceScript.countdown);
 
   return (
-    <section ref={voiceRef} className="section section-cream" style={{ position: "relative" }}>
+    <section ref={voiceRef} id="countdown" className="section section-cream" style={{ position: "relative" }}>
       <WaveDivider fill="#fffaef" />
       <ArtworkBackground src={countdownBg} fadeColor="var(--cream-50)" focalPosition="center 35%" tintOpacity={0.45} />
 
@@ -86,8 +85,6 @@ export default function CountdownSection() {
             🎉 See you there! 🎉
           </motion.p>
         )}
-        <motion.img src={cuteImg} alt="Jaihann ready for the party" initial={{ opacity: 0, y: 30, rotate: -4 }} whileInView={{ opacity: 1, y: 0, rotate: -3 }} viewport={{ once: true }} transition={{ delay: 0.15, duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }} style={{ width: 150, margin: "36px auto 0", borderRadius: 20, boxShadow: "var(--shadow-soft)", border: "4px solid var(--white)" }} />
-
       </div>
     </section>
   );

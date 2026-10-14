@@ -42,18 +42,23 @@ function fireConfetti() {
 export default function LandingGate({ onOpen }) {
   const [isClosing, setIsClosing] = useState(false);
   const guestName = useMemo(getGuestName, []);
-  const { speak } = useVoiceNarration();
+  const { speak, primeAudio } = useVoiceNarration();
 
-  // Greet the guest with the "meeting's about to start" line as soon as
-  // the gate shows up. Some mobile browsers block audio/speech before any
-  // tap on the page — harmless if so, the line just plays a beat late,
-  // right after the guest's first tap lands.
+  // Best-effort greeting attempt as soon as the gate shows up — this works
+  // on desktop browsers, but phones (iOS Safari especially) block it since
+  // it wasn't triggered by a real tap. That's expected; the real fix is
+  // primeAudio() below, fired on the actual "Open Invitation" tap.
   useEffect(() => {
     speak(voiceScript.landingGate.text, { audioSrc: voiceScript.landingGate.audioSrc });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleOpen() {
+    // MUST run first, synchronously, inside this real click handler — this
+    // is what unlocks speech/audio playback on phones for every section's
+    // voice line that plays afterward from scrolling. See the detailed
+    // comment in VoiceNarrationContext.jsx for why this is necessary.
+    primeAudio();
     fireConfetti();
     setIsClosing(true);
     // Snap straight back to the top of the page so the reveal always
